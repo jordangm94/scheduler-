@@ -22,6 +22,7 @@ import "components/DayListItem.scss"
 export default function DayListItem(props) {
 
   const formatSpots = function(propSpots) {
+    //Note in this function we return no spots or 1 spot in order to tackle the pleuralization of word spot appropriately.
     if (props.spots === 0) {
       return "no spots";
     } else if (props.spots === 1) {
@@ -31,6 +32,8 @@ export default function DayListItem(props) {
     }
   }
 
+  //Conditional statements using classNames functions, base className is day-list__item, if props.selected or props.spots conditions 
+  //are truthy, than other css is implemented. 
   let dayClass = classNames('day-list__item', {'day-list__item--selected': props.selected, 'day-list__item--full': props.spots === 0 ? true: false})
 
   return (
