@@ -7,9 +7,11 @@ import "index.scss";
 
 import Button from "components/Button";
 
+import DayListItem from "components/DayListItem";
+
 storiesOf("Button", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
   .add("Base", () => <Button>Base</Button>)
   .add("Confirm", () => <Button confirm>Confirm</Button>)
@@ -21,4 +23,21 @@ storiesOf("Button", module)
     <Button disabled onClick={action("button-clicked")}>
       Disabled
     </Button>
+  ));
+
+//Personal Notes: What comes below is the equivalent to our App.js page in different assignments
+//We are creatting various flavors of the same DayListItem, but will have each behave or style differently based on 
+//what it is handling. In each of these dayListitems, we are passing props which we then call in our DayListItem .
+
+//So we start with a story called DayListItem in storybook, and under that will be the different flavors of our button. 
+
+storiesOf("DayListItem", module) //Initiates Storybook and registers our DayListItem component
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
+  }) // Provides the default background color for our component
+  .add("Unselected", () => <DayListItem name="Monday" spots={5} />) // To define our stories, we call add() once for each of our test states to generate a story
+  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
+  .add("Full", () => <DayListItem name="Monday" spots={0} />)
+  .add("Clickable", () => (
+    <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
   ));
