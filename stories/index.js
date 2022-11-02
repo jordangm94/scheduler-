@@ -8,9 +8,10 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList"
 
+//Appointment imports
 import Appointment from "components/Appointment/index.js"
-
 import Header from "components/Appointment/Header"
+import Empty from "components/Appointment/Empty";
 
 storiesOf("Button", module)
   .addParameters({
@@ -147,6 +148,9 @@ storiesOf("InterviewerList", module)
 
   //The following stories will be for Appointments and all of it's child components: 
 
+  //Note in order to add a functioon to a story to pass down, must pass function as prop and use word action
+  //with name of function as a string within action. 
+
   storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
@@ -154,3 +158,4 @@ storiesOf("InterviewerList", module)
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12PM"/>)
   .add("Header", () => <Header time="12PM"/>)
+  .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
