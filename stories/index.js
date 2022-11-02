@@ -11,6 +11,8 @@ import DayListItem from "components/DayListItem";
 
 import DayList from "components/DayList";
 
+import InterviewerListItem from "components/InterviewerListItem";
+
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -76,3 +78,39 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
         <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
     ));
   
+    //The following code is going to create stories for the InterviewerListItem and 
+    //InterviewList
+
+    const interviewer = {
+      id: 1,
+      name: "Sylvia Palmer",
+      avatar: "https://i.imgur.com/LpaY82x.png"
+    };
+    
+    storiesOf("InterviewerListItem", module)
+      .addParameters({
+        backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+      })
+      .add("Unselected", () => (
+        <InterviewerListItem
+          id={interviewer.id}
+          name={interviewer.name}
+          avatar={interviewer.avatar}
+        />
+      ))
+      .add("Selected", () => (
+        <InterviewerListItem
+          id={interviewer.id}
+          name={interviewer.name}
+          avatar={interviewer.avatar}
+          selected
+        />
+      ))
+      .add("Clickable", () => (
+        <InterviewerListItem
+          id={interviewer.id}
+          name={interviewer.name}
+          avatar={interviewer.avatar}
+          setInterviewer={action("setInterviewer")}
+        />
+      ));
