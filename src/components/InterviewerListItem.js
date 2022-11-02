@@ -15,7 +15,7 @@ export default function InterviewerListItem(props) {
   //Below implemented an on click event so that when the container is clicked, the set interviewer function called
   //on props.id. This will have greater function near end when we deal with state! 
   return (
-    <li className={interviewerClass} onClick={() => props.setInterviewer(props.id)}>
+    <li className={interviewerClass} onClick={props.setInterviewer}>
   <img
     className="interviewers__item-image"
     src={props.avatar}
