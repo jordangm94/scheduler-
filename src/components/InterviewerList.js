@@ -18,8 +18,8 @@ export default function InterviewerList(props) {
       key = {interviewerObj.id}
       name = {interviewerObj.name}
       avatar = {interviewerObj.avatar}
-      selected = {interviewerObj.id === props.interviewer}
-      setInterviewer = {() => props.setInterviewer(interviewerObj.id)}
+      selected = {interviewerObj.id === props.value}
+      setInterviewer = {() => props.onChange(interviewerObj.id)}
       />
       //Note all of these InterviewerListItem components and what they are populated with thanks to passed props, is stored in
       //listOfInterviewers variable. Next we will now incorporate this vairable into HTML to display list. 
