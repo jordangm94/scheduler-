@@ -17,7 +17,7 @@ export default function Form(props) {
 
   const cancel = function () {
     reset()
-    // props.onCancel()//????
+    props.onCancel()
   }
 
   return (
@@ -44,7 +44,7 @@ export default function Form(props) {
           <Button onClick={cancel} danger>
             Cancel
           </Button>
-          <Button onClick={props.onSave} confirm>
+          <Button onClick={() => props.onSave(student, interviewer)} confirm>
             Save
           </Button>
         </section>
@@ -82,3 +82,7 @@ export default function Form(props) {
 
 //Lasly, we do not want the submit button to fire a request or "submit" when user clicks enter, which is 
 //it's default value. Hence we add a prevent default on submit in the form element.
+
+//Extremely crucial note, for the on save button within the form, in order to save the name of the student and interviewer,
+//you must put it in an anonymous function. This is because you are passing params to onSave. If you do not, 
+//it calls every time the page re-renders, which is every time the state changes. 
