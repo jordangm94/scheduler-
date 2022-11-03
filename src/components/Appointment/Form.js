@@ -4,9 +4,21 @@ import InterviewerList from "components/InterviewerList";
 
 import Button from "components/Button";
 
+//The bottom of this document contains notes for various instances of this Form. 
+
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
+  const reset = function() {
+    setStudent("");
+    setInterviewer(null);
+  }
+
+  const cancel = function () {
+    reset()
+    // props.onCancel()//????
+  }
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -29,7 +41,7 @@ export default function Form(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={props.onCancel} danger>
+          <Button onClick={cancel} danger>
             Cancel
           </Button>
           <Button onClick={props.onSave} confirm>
@@ -60,3 +72,10 @@ export default function Form(props) {
 //For the interviewerlist component we are passing interviewers, which is an object with all interviewers. Onchange we are
 //making equivalent to setInterviewer, so that when new interviewer is selected "on a change" we set that new interviewer
 //as the default "interviewer", which that id will now appear in value={interviewer} and will be passed accordingly to Interviewer List. 
+
+//Also created a reset function that will reset the form information when the cancel button is clicked. 
+//We put this reset function inside a cancel function that will call a function called props.oncancel,
+//at the current moment props.onCancel doesn't do anything in the future it will. 
+
+//We tie this cancel function to the cancel button onClick so that it triggers and resets form and call onCancel function
+//when cancel button is clicked. 
