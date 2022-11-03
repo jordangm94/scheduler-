@@ -1,28 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import Axios from "axios";
 
 import "components/Application.scss";
 
 import DayList from "./DayList";
 
 import Appointment from "./Appointment";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 const appointments = {
   "1": {
@@ -67,6 +51,20 @@ export default function Application(props) {
 
   const [day, setDay] = useState('Monday');
 
+  //Here we set state for days information which we will be retrieving frmo external API! 
+  const [days, setDays] = useState([])
+
+  //Trigger useEffect to make a request to /api/days using axios.get. Axios returns response in a promise and we update
+  //the default days value by using setDays on the response.data(array of days objects)
+  useEffect(() => {
+    Axios.get('/api/days')
+    .then(response => {
+      setDays([...response.data])
+    });
+
+    //With setDays updating our default days state, we will see that change on page within DayList Component that uses the days state
+
+  }, [])
   const listOfAppointments = Object.values(appointments).map((appointmentObj) => (
     <Appointment 
     key={appointmentObj.id}
