@@ -71,6 +71,10 @@ export default function Application(props) {
     <Appointment 
     key={appointmentObj.id}
     {...appointmentObj}
+    //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
+    //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
+    //it needs! 
+    
     // id={appointmentObj.id}
     // time={appointmentObj.time}
     // interview={appointmentObj.interview}
