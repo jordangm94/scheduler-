@@ -61,10 +61,12 @@ export default function Application(props) {
     .then(response => {
       setDays([...response.data])
     });
-
-    //With setDays updating our default days state, we will see that change on page within DayList Component that uses the days state
-
+    //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
+    //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
   }, [])
+
+  //With setDays updating our default days state, we will see that change on page within DayList Component that uses the days state
+
   const listOfAppointments = Object.values(appointments).map((appointmentObj) => (
     <Appointment 
     key={appointmentObj.id}
