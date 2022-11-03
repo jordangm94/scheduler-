@@ -23,7 +23,7 @@ export default function Form(props) {
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off">
+        <form onSubmit={event => event.preventDefault()} autoComplete="off">
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
@@ -79,3 +79,6 @@ export default function Form(props) {
 
 //We tie this cancel function to the cancel button onClick so that it triggers and resets form and call onCancel function
 //when cancel button is clicked. 
+
+//Lasly, we do not want the submit button to fire a request or "submit" when user clicks enter, which is 
+//it's default value. Hence we add a prevent default on submit in the form element.
