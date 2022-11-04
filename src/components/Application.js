@@ -8,7 +8,7 @@ import DayList from "./DayList";
 
 import Appointment from "./Appointment";
 
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 // const appointments = {
 //   "1": {
@@ -55,8 +55,8 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: {}
+    appointments: {},
+    interviewers:{}
   });
 
   //Function to setDay individually using setState. 
@@ -67,33 +67,37 @@ export default function Application(props) {
   useEffect(() => {
     Promise.all([
       Axios.get('/api/days'),
-      Axios.get('/api/appointments')
+      Axios.get('/api/appointments'),
+      Axios.get('/api/interviewers')
     ]).then((all) => {
-      console.log(all[0].data.name)
-      console.log(all[1].data);
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}));
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     })
   }, [])
   
+  console.log(state.interviewers)
   //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
   //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
   
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  const listOfAppointments = dailyAppointments.map((appointmentObj) => (
-    <Appointment 
-    key={appointmentObj.id}
-    {...appointmentObj}
-    //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
-    //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
-    //it needs!
-    
-    // id={appointmentObj.id}
-    // time={appointmentObj.time}
-    // interview={appointmentObj.interview}
-    />
-  ))
+  const listOfAppointments = dailyAppointments.map((appointmentObj) => {
+    const interview = getInterview(state, appointmentObj.interview);
+    return (
+      <Appointment 
+      key={appointmentObj.id}
+      {...appointmentObj}
+      interview={interview}
+      //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
+      //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
+      //it needs!
+      
+      // id={appointmentObj.id}
+      // time={appointmentObj.time}
+      // interview={appointmentObj.interview}
+      />
+    )
+  })
 
 
   return (
