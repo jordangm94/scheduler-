@@ -49,17 +49,29 @@ const appointments = {
 
 export default function Application(props) {
 
-  const [day, setDay] = useState('Monday');
+  //Refactored states and placed all state in Applicatin component within a single object.
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    appointments: {}
+  });
 
-  //Here we set state for days information which we will be retrieving frmo external API! 
-  const [days, setDays] = useState([])
+  //Function to setDay individually using setState. 
+  const setDay = day => setState({ ...state, day });
+
+  //Function to setDays individually using setState
+  //Note here we must use prev to ensure that The action used to set the state still gets the previous state to ensure that only the days value changes.
+  const setDays = (days) => {setState(prev => ({ ...prev, days }))}
+
 
   //Trigger useEffect to make a request to /api/days using axios.get. Axios returns response in a promise and we update
   //the default days value by using setDays on the response.data(array of days objects)
   useEffect(() => {
     Axios.get('/api/days')
-    .then(response => {
-      setDays([...response.data])
+    .then(response => {setDays(response.data)
+      // How to set state with new format | setState({...state, day: 'Tuesday'})// setDays([...response.data])
+      // setState({...state})// setDays([...response.data])
     });
     //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
     //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
@@ -73,7 +85,7 @@ export default function Application(props) {
     {...appointmentObj}
     //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
     //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
-    //it needs! 
+    //it needs!
     
     // id={appointmentObj.id}
     // time={appointmentObj.time}
@@ -93,8 +105,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            value={day}
+            days={state.days}
+            value={state.day}
             onChange={setDay}
           />
         </nav>
