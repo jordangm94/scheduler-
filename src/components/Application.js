@@ -8,7 +8,7 @@ import DayList from "./DayList";
 
 import Appointment from "./Appointment";
 
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 // const appointments = {
 //   "1": {
@@ -74,7 +74,7 @@ export default function Application(props) {
     })
   }, [])
   
-  console.log(state.interviewers)
+  console.log(state)
   //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
   //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
   
@@ -88,6 +88,7 @@ export default function Application(props) {
       key={appointmentObj.id}
       {...appointmentObj}
       interview={interview}
+      interviewers={getInterviewersForDay(state, state.day)}
       //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
       //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
       //it needs!
@@ -95,6 +96,9 @@ export default function Application(props) {
       // id={appointmentObj.id}
       // time={appointmentObj.time}
       // interview={appointmentObj.interview}
+
+      //Further note: Here we used getInterviewersForDay function in order for it to properly acquire the correct interviewer data and
+      //pass it dwn to Appointment --> Form --> InterviewerList --> InterviewerListItem
       />
     )
   })

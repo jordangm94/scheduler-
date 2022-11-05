@@ -32,9 +32,7 @@ const { mode, transition, back } = useVisualMode(
       interviewer={props.interview.interviewer}
       />
       )}
-      {mode === CREATE && <Form onCancel={() => back()} interviewers={[]}/>}
-
-      {/* {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> : <Empty />} */}
+      {mode === CREATE && <Form onCancel={() => back()} interviewers={props.interviewers}/>}
     </article>
   )
 }
