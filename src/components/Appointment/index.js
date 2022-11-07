@@ -27,8 +27,10 @@ function save(name, interviewer) {
     student: name,
     interviewer
   };
-  // console.log(props.id, interview)
+  //The book interview function is passed to the appointment prop, because of it's axios call, it is considered a promise. 
+  //So we tack on a .then with the transition show, this means that the transition show does not happen till the bookInterview promise/putrequest/setState resloves. 
   props.bookInterview(props.id, interview)
+  .then(() => {transition(SHOW)})
 }
 
 
