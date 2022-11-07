@@ -10,12 +10,15 @@ import Show from "./Show";
 
 import Form from './Form';
 
+import Status from './Status';
+
 import useVisualMode from 'hooks/useVisualMode';
 
 export default function Appointment(props) {
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE"
+const SAVING = "SAVING"
 
 //Object destructuring will allow use to use "mode" rather than useVisualMode.mode
 const { mode, transition, back } = useVisualMode(
@@ -27,6 +30,7 @@ function save(name, interviewer) {
     student: name,
     interviewer
   };
+  transition(SAVING)
   //The book interview function is passed to the appointment prop, because of it's axios call, it is considered a promise. 
   //So we tack on a .then with the transition show, this means that the transition show does not happen till the bookInterview promise/putrequest/setState resloves. 
   props.bookInterview(props.id, interview)
@@ -45,6 +49,7 @@ function save(name, interviewer) {
       />
       )}
       {mode === CREATE && <Form onSave={save} onCancel={() => back()} interviewers={props.interviewers}/>}
+      {mode === SAVING && <Status message= "Saving"/>}
     </article>
   )
 }
