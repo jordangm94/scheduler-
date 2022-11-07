@@ -74,7 +74,7 @@ export default function Application(props) {
     };
     //Next we are going to make an axios put request with the information we want to depsit, the appointment, it will follow this alias: 
     //axios.put(url, data). We make the Axios put request, and upon the response (which is a 204 status), we set the State to include the new appointment. 
-    Axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+    return Axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
     .then(response => setState({...state, appointments})
     )
   }
