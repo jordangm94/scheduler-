@@ -59,6 +59,29 @@ export default function Application(props) {
     interviewers:{}
   });
 
+  function bookInterview(id, interview) {
+    //Create new appointment object, within this object we will access spread everything within specific appointments object,
+    //which we targetted via ID. We also replace interview object within appointment, with new interview object coming in. 
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    //Here we are now spreading all values from original appointments object in state, into new appointments object. 
+    //and providing our appointment id with our appointment info. 
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    //After the last few steps, we've been working with a copy of our appointments, we now set the state to the new appointments
+    //which will contain the appointment that was just saved. 
+    setState({
+      ...state,
+      appointments
+    })
+
+
+  }
+
   //Function to setDay individually using setState. 
   const setDay = day => setState({ ...state, day });
 
@@ -73,8 +96,6 @@ export default function Application(props) {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     })
   }, [])
-  
-  console.log(state)
   //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
   //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
   
@@ -89,6 +110,7 @@ export default function Application(props) {
       {...appointmentObj}
       interview={interview}
       interviewers={getInterviewersForDay(state, state.day)}
+      bookInterview={bookInterview}
       //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
       //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
       //it needs!
@@ -128,7 +150,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {listOfAppointments}
-        <Appointment key="last" time="5pm" />
+        <Appointment bookInterview={bookInterview} key="last" time="5pm" />
       </section>
     </main>
   );
