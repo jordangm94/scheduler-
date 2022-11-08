@@ -17,10 +17,10 @@ const useVisualMode = function(initialMode) {
     if (replace) {
       setHistory((prev) => {
         prev.pop()
-        return [...prev, mode]
+        return [...prev, newMode]
       })
     } else {
-        setHistory(prev => ([...prev, mode]))
+        setHistory(prev => ([...prev, newMode]))
     }
   }
 
@@ -28,11 +28,12 @@ const useVisualMode = function(initialMode) {
 
   //Needs to use setHistory as well in order for place in history to be remembered, that way if we call back again it will bring us back a spot from our current position, not the initial position. 
   const back = function() {
-    if (history.length === 1) return 
-    setMode(history[history.length - 2])
-    setHistory(history.slice(0, history.length - 1))
+    if (history.length <= 1) return 
+    setHistory((prev) => {
+      setMode(prev[prev.length - 2])
+      return prev.slice(0, prev.length - 1)})
   }
-
+  console.log(history, mode)
   //return an object with a mode property and transition function
   return { mode, transition, back };
 };
