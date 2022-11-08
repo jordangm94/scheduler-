@@ -7,6 +7,10 @@ import Button from "components/Button";
 //The bottom of this document contains notes for various instances of this Form. 
 
 export default function Form(props) {
+
+  //Error state for when student name submitted as empty
+  const [error, setError] = useState("");
+
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
@@ -20,6 +24,20 @@ export default function Form(props) {
     props.onCancel()
   }
 
+  //Validate function in case student name entered as empty
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+
+    if (interviewer === null) {
+      setError("Please select an interviewer")
+      return;
+    }
+    props.onSave(student, interviewer);
+  }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -31,7 +49,9 @@ export default function Form(props) {
             placeholder="Enter Student Name"
             value={student}
             onChange={(event) => setStudent(event.target.value)}
+            data-testid="student-name-input"
           />
+        <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList
           interviewers={props.interviewers}
@@ -44,7 +64,7 @@ export default function Form(props) {
           <Button onClick={cancel} danger>
             Cancel
           </Button>
-          <Button onClick={() => props.onSave(student, interviewer)} confirm>
+          <Button onClick={validate} confirm>
             Save
           </Button>
         </section>
@@ -52,6 +72,8 @@ export default function Form(props) {
     </main>
   );
 }
+
+//Personal Notes:
 
 //For our create state we are passing the array of interviewers through props.interviewers
 //and assigning it a prop name of interviewers. This way it can pass correct info from interviewers array
