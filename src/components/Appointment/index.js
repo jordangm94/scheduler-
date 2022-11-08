@@ -16,12 +16,14 @@ import useVisualMode from 'hooks/useVisualMode';
 import Confirm from './Confirm';
 
 export default function Appointment(props) {
+  console.log('Props passed from APPjs', props);
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING ="DELETING";
 const CONFIRM ="CONFIRM";
+const EDIT ="EDIT";
 
 //Object destructuring will allow use to use "mode" rather than useVisualMode.mode
 const { mode, transition, back } = useVisualMode(
@@ -55,16 +57,27 @@ function cancel() {
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
       <Show
-      student={props.interview.student}
-      interviewer={props.interview.interviewer}
-      onDelete={() => {transition(CONFIRM)}}
+       student={props.interview.student}
+       interviewer={props.interview.interviewer}
+       onDelete={() => {transition(CONFIRM)}}
+       onEdit={() => {transition(EDIT)}}
       />
       )}
-      {mode === CREATE && <Form onSave={save} onCancel={() => back()} interviewers={props.interviewers}/>}
+      {mode === CREATE && <Form 
+        onSave={save} 
+        onCancel={() => back()} 
+        interviewers={props.interviewers}
+      />}
       {mode === SAVING && <Status message= "Saving"/>}
       {mode === DELETING && <Status message= "Deleting"/>}
       {mode === CONFIRM && <Confirm message="Are you sure you want to delete your appointment?" onCancel={() => back()} onConfirm={cancel}/>}
-
+      {mode === EDIT && <Form 
+        onSave={save} 
+        onCancel={() => back()} 
+        interviewers={props.interviewers}
+        student={props.interview.student}
+        interviewer={props.interview.interviewer.id}
+      />}
     </article>
   )
 }
