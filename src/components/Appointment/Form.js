@@ -8,7 +8,7 @@ import Button from "components/Button";
 
 export default function Form(props) {
 
-  //Error state for when student name submitted as empty
+  //Error state for when student name submitted as empty or interviewer not selected
   const [error, setError] = useState("");
 
   const [student, setStudent] = useState(props.student || "");
@@ -24,7 +24,8 @@ export default function Form(props) {
     props.onCancel()
   }
 
-  //Validate function in case student name entered as empty
+  //Validate function in case student name entered as empty or interviewer not selected
+  //Save is now happening from within this function, which is why we now only pass this function from save button.
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
@@ -37,6 +38,7 @@ export default function Form(props) {
     }
     props.onSave(student, interviewer);
   }
+  //Errors set within this function will appear IF they are set in appointment_validation section
 
   return (
     <main className="appointment__card appointment__card--create">
