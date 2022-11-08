@@ -33,7 +33,6 @@ const useVisualMode = function(initialMode) {
       setMode(prev[prev.length - 2])
       return prev.slice(0, prev.length - 1)})
   }
-  console.log(history, mode)
   //return an object with a mode property and transition function
   return { mode, transition, back };
 };
