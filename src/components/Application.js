@@ -79,11 +79,27 @@ export default function Application(props) {
     )
   }
 
+  //This function will see interview object to null and make a delete request to the API to set interview by said ID to null. 
+  //We pass this function to appointment, where we will use it as a prop in our function cancel
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    .then(response => setState({...state, appointments})
+  )}
+
   //Function to setDay individually using setState. 
   const setDay = day => setState({ ...state, day });
 
   //Trigger useEffect to make a request to /api/days using axios.get. Axios returns response in a promise and we update
   //the default days value by using setDays on the response.data(array of days objects)
+  
   useEffect(() => {
     Promise.all([
       Axios.get('/api/days'),
@@ -96,7 +112,6 @@ export default function Application(props) {
   //Note, we include an empty array as second argument for useEffect which tells it that we only run this api request once when the 
   //component renders. This empty array, or state passed to this array tells useEffect what to do. If not added, will continuosly be triggered. 
   
-
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const listOfAppointments = dailyAppointments.map((appointmentObj) => {
@@ -108,6 +123,7 @@ export default function Application(props) {
       interview={interview}
       interviewers={getInterviewersForDay(state, state.day)}
       bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
       //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
       //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
       //it needs!
@@ -147,7 +163,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {listOfAppointments}
-        <Appointment bookInterview={bookInterview} key="last" time="5pm" />
+        <Appointment cancelInterview={cancelInterview} bookInterview={bookInterview} key="last" time="5pm" />
       </section>
     </main>
   );

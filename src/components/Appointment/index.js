@@ -13,12 +13,15 @@ import Form from './Form';
 import Status from './Status';
 
 import useVisualMode from 'hooks/useVisualMode';
+import Confirm from './Confirm';
 
 export default function Appointment(props) {
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
-const CREATE = "CREATE"
-const SAVING = "SAVING"
+const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETING ="DELETING";
+const CONFIRM ="CONFIRM";
 
 //Object destructuring will allow use to use "mode" rather than useVisualMode.mode
 const { mode, transition, back } = useVisualMode(
@@ -37,7 +40,15 @@ function save(name, interviewer) {
   .then(() => {transition(SHOW)})
 }
 
+//This function is passed to the show component so that when an individual clicks the delete button, it is triggered. 
+function cancel() {
+  transition(DELETING)
+  props.cancelInterview(props.id)
+  .then(() => {transition(EMPTY)})
+}
 
+//Note for our show component, we allow for our onDelete, trash button, to transition us to Confirm component. 
+//From there we decide on line 66 whether we execute cancel and delete of appointment or go back to show.
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -46,10 +57,14 @@ function save(name, interviewer) {
       <Show
       student={props.interview.student}
       interviewer={props.interview.interviewer}
+      onDelete={() => {transition(CONFIRM)}}
       />
       )}
       {mode === CREATE && <Form onSave={save} onCancel={() => back()} interviewers={props.interviewers}/>}
       {mode === SAVING && <Status message= "Saving"/>}
+      {mode === DELETING && <Status message= "Deleting"/>}
+      {mode === CONFIRM && <Confirm message="Are you sure you want to delete your appointment?" onCancel={() => back()} onConfirm={cancel}/>}
+
     </article>
   )
 }
