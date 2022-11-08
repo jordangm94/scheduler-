@@ -11,14 +11,20 @@ const useVisualMode = function(initialMode) {
   //Transition function to take in newMode and set mode state to newMode, takes in optional replace argument as well. 
   const transition = function(newMode, replace = false) {
     //Store history in a variable, as we never want to manipulate history state directly. 
-    let currentHistory = [...history];
+
     //if replace is truthy, we are going to pop one value off of the end of history array, or in other words replace it with what is to follow, the newMode
-    if (replace) {
-      currentHistory.pop()
-    }
     //These two lines set mode to new mode and add new mode to end of history state array, whether we replaced a value or not
     setMode(newMode)
-    setHistory([...currentHistory, newMode])
+    // setHistory([...currentHistory, newMode])
+    // prev => ([...prev, mode])
+    if (replace) {
+      setHistory((prev) => {
+        prev.pop()
+        return [...prev, mode]
+      })
+    } else {
+        setHistory(prev => ([...prev, mode]))
+    }
   }
 
   //Back function that allows for mode to be set back to previous mode in history array. Uses if conditional to ensure history.length to ensure that we are never backing past the fist value in array. 

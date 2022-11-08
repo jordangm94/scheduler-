@@ -13,7 +13,10 @@ import Form from './Form';
 import Status from './Status';
 
 import useVisualMode from 'hooks/useVisualMode';
+
 import Confirm from './Confirm';
+
+import Error from './Error';
 
 export default function Appointment(props) {
   console.log('Props passed from APPjs', props);
@@ -24,6 +27,8 @@ const SAVING = "SAVING";
 const DELETING ="DELETING";
 const CONFIRM ="CONFIRM";
 const EDIT ="EDIT";
+const ERROR_SAVE = "ERROR_SAVE"
+const ERROR_DELETE = "ERROR_DELETE"
 
 //Object destructuring will allow use to use "mode" rather than useVisualMode.mode
 const { mode, transition, back } = useVisualMode(
@@ -40,13 +45,15 @@ function save(name, interviewer) {
   //So we tack on a .then with the transition show, this means that the transition show does not happen till the bookInterview promise/putrequest/setState resloves. 
   props.bookInterview(props.id, interview)
   .then(() => {transition(SHOW)})
+  .catch(response => transition(ERROR_SAVE, true))
 }
 
 //This function is passed to the show component so that when an individual clicks the delete button, it is triggered. 
 function cancel() {
-  transition(DELETING)
+  transition(DELETING, true)
   props.cancelInterview(props.id)
   .then(() => {transition(EMPTY)})
+  .catch(response => transition(ERROR_DELETE, true))
 }
 
 //Note for our show component, we allow for our onDelete, trash button, to transition us to Confirm component. 
@@ -78,6 +85,8 @@ function cancel() {
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
       />}
+      {mode === ERROR_SAVE && <Error onClose={() => {back()}} message= "Unable to create an appointment, please try again."/>}
+      {mode === ERROR_DELETE && <Error onClose={() => {back()}} message= "Unable to delete the appointment, please try again."/>}
     </article>
   )
 }
