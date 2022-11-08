@@ -19,7 +19,6 @@ import Confirm from './Confirm';
 import Error from './Error';
 
 export default function Appointment(props) {
-  console.log('Props passed from APPjs', props);
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
