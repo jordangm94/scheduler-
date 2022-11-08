@@ -10,10 +10,7 @@ const useVisualMode = function(initialMode) {
 
   //Transition function to take in newMode and set mode state to newMode, takes in optional replace argument as well. 
   const transition = function(newMode, replace = false) {
-    //Store history in a variable, as we never want to manipulate history state directly. 
-
-    //if replace is truthy, we are going to pop one value off of the end of history array, or in other words replace it with what is to follow, the newMode
-    //These two lines set mode to new mode and add new mode to end of history state array, whether we replaced a value or not
+    //setMode to new mode and use conditional where if replace is truthy, we will setHistory using prev in order to ensure we get all modes present.
     setMode(newMode)
     // setHistory([...currentHistory, newMode])
     // prev => ([...prev, mode])
