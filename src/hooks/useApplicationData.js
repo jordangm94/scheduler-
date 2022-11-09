@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Axios from "axios";
+import axios from "axios";
 
 //This custom hook is responsible for loading the initial data from the API. 
 //This hook will also provide the actions to update the state, causing the component to render. Storing it here to make app.js cleaner!
@@ -45,7 +45,7 @@ const useApplicationData = function() {
     
     //Next we are going to make an axios put request with the information we want to depsit, the appointment, it will follow this alias: 
     //axios.put(url, data). We make the Axios put request, and upon the response (which is a 204 status), we set the State to include the new appointment. 
-    return Axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+    return axios.put(`/api/appointments/${id}`, appointment)
     .then(response => setState({...state, appointments, days})
     )
   }
@@ -74,7 +74,7 @@ const useApplicationData = function() {
       ...state.appointments,
       [id]: appointment
     }
-    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
     .then(response => setState({...state, appointments, days})
   )}
 
@@ -86,9 +86,9 @@ const useApplicationData = function() {
   
   useEffect(() => {
     Promise.all([
-      Axios.get('/api/days'),
-      Axios.get('/api/appointments'),
-      Axios.get('/api/interviewers')
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
     ]).then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     })
