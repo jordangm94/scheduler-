@@ -36,6 +36,8 @@ export default function Form(props) {
       setError("Please select an interviewer")
       return;
     }
+    //Clear error just in case user forgot to put student name or select interviewer and is going through form a second time.
+    setError("");
     props.onSave(student, interviewer);
   }
   //Errors set within this function will appear IF they are set in appointment_validation section
