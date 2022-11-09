@@ -58,7 +58,7 @@ function cancel() {
 //Note for our show component, we allow for our onDelete, trash button, to transition us to Confirm component. 
 //From there we decide on line 66 whether we execute cancel and delete of appointment or go back to show.
   return (
-    <article className="appointment">
+    <article data-testid="appointment" className="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
