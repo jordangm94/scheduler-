@@ -1,7 +1,5 @@
 //This function receives state object with days and appointments and given day name. 
 
-import Appointment from "components/Appointment";
-
 export function getAppointmentsForDay(state, day) {
   //Here we filter over state.days array, looking at each obj within the array and check if obj name === day(second argument)
   //Important note, .filter will always provide your answer within an array. Hence why we will need to use [0] to access it later on. 
