@@ -44,5 +44,21 @@ describe("Appointment", () => {
     cy.contains(".appointment__card--show", "Tori Malcolm");
   });
 
+  it("should cancel an interview", () => {
+    // Clicks the delete button for the existing appointment
+    cy.get("[alt=Delete]").click({ force: true });
 
+    // Clicks the confirm button
+    cy.contains("Confirm").click();
+
+    // Ensure that deleting status component appears
+    cy.contains("Deleting").should("exist");
+    
+    // Ensure that deleting status component dissapears
+    cy.contains("Deleting").should("not.exist")
+    
+    //Sees that the appointment slot is empty
+    cy.contains(".appointment__card--show", "Archie Cohen")
+    .should("not.exist");
+  });
 });
