@@ -2,6 +2,8 @@ import React from "react";
 
 import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText, getByTestId, getByDisplayValue } from "@testing-library/react";
 
+import axios from "axios";
+
 import Application from "components/Application";
 
 afterEach(cleanup);
@@ -19,7 +21,7 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    const { container, debug } = render(<Application />); 
+    const { container } = render(<Application />); 
 
     //container represents all html of component we are rendering, and therefore in html we are looking fro Archie Cohen
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -123,6 +125,71 @@ it("loads data, edits an interview and keeps the spots remaining for Monday the 
   const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"))
   expect(queryByText(day, "1 spot remaining")).toBeInTheDocument()
   })
+
+  it("shows the save error when failing to save an appointment", async () => {
+    //This line prevents the put request from going through
+    axios.put.mockRejectedValueOnce();
+
+    const { container } = render(<Application />); 
+
+    //Ensure that page has loaded by ensuring that Archie Cohen is on the page
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    //Here we getting the appointment section of the html via it's testID and storing it in a variable
+    const appointments = getAllByTestId(container, "appointment");
+
+    //Here we are referincing the first appointment that is empty for us to book into
+    const appointment = appointments[0];
+
+    //On the appoinment, click the add button
+    fireEvent.click(getByAltText(appointment, "Add"));
+
+    //The next three lines will target changing the input value to a name, selecting an interviewer and clicking save
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: {value: "Lydia Miller-Jones"}
+    })
+
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    fireEvent.click(getByText(appointment, "Save"));
+    
+    //Expect to see saving status briefly
+    expect(getByText(appointment, "Saving")).toBeInTheDocument()
+
+    //Expect to see unable to create appointment error on the page
+    await waitForElement(() => queryByText(appointment, "Unable to create an appointment, please try again."));
+
+    //Click on close button for error notificatioon
+    fireEvent.click(getByAltText(appointment, "Close"));
+
+    //This line ensures that we are returned back to the create component that shows Enter Student Name
+    await waitForElement(() => getByPlaceholderText(appointment, "Enter Student Name"));
+  });
+
+it("shows the delete error when failing to delete an existing appointment", async () => {
+  //This line prevents the put request from going through
+  axios.delete.mockRejectedValueOnce();
+
+  const { container } = render(<Application />);
+
+  await waitForElement(() => getByText(container, "Archie Cohen"));
+    
+  const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+
+  fireEvent.click(queryByAltText(appointment, "Delete"))
+
+  await waitForElement(() => queryByText(appointment, "Are you sure you want to delete your appointment?"));
+
+  fireEvent.click(queryByText(appointment, "Confirm"));
+
+  expect(getByText(appointment, "Deleting")).toBeInTheDocument()
+
+  await waitForElement(() => getByText(appointment, "Unable to delete the appointment, please try again."));
+
+  fireEvent.click(getByAltText(appointment, "Close"));
+
+  await waitForElement(() => getByText(container, "Archie Cohen"));
+  });
 });
 
 
