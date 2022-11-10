@@ -1,6 +1,6 @@
 # Interview Scheduler
 
-Using the latest tools and techniques, this React application allows users to book and cancel interviews. It combines a concise API with a WebSocket server to build a realtime experience.
+Using the latest tools and techniques, this single page React application allows users to book and cancel interviews. It combines a concise API with a WebSocket server to build a realtime experience.
 
 ## Final Product:
 
