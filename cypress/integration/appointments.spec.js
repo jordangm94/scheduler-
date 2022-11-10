@@ -1,11 +1,14 @@
 describe("Appointment", () => {
-
-  it("should book an interview", () => {
+  //Beforeeach running in scope of describe, this will apply before each of below tests is run
+  beforeEach(() => {
     //Clear database with each rerun of the test
     cy.request("GET", "/api/debug/reset")
-    // Visits the root of our web server
+    // Visits the root of our web server and ensures we are on Monday
     cy.visit("/");
     cy.contains("Monday");
+  })
+
+  it("should book an interview", () => {
     // Clicks on the "Add" button in the second appointment
     cy.get("[alt=Add]")
     //.first ensures that we click on the first DOM element within a set of DOM elements, since there are 
@@ -20,11 +23,7 @@ describe("Appointment", () => {
     cy.contains("Save").click();
     // Sees the booked appointment
     cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-    cy.contains(".appointment__card--show", "Sylvia Palmer");
-
-
-
-
+    //Removed line searching for Sylvia Palmer as interviewer for Lydia, to prevent confusion with other appointment with Sylvia on this page
   });
 
 
