@@ -4,21 +4,17 @@ Using the latest tools and techniques, this React application allows users to bo
 
 ## Final Product:
 
-### Tweeter - Tweet Box & Character Counter
+### Interview Scheduler - Main page
 
-!["TweetBox"]()
+!["Landing page for Interview Scheduler"](https://github.com/jordangm94/scheduler-/blob/master/docs/scheduler-full-page-view.png?raw=true)
 
-### Tweeter - Desktop View
+### Interview Scheduler - Create a new appointment
 
-!["Desktop View"]()
+!["Create a new appointment"](https://github.com/jordangm94/scheduler-/blob/master/docs/scheduler-create-new-app.png?raw=true)
 
-### Tweeter - Error Message
+### Interview Scheduler - Edit an existing appointment
 
-!["Error Message"]()
-
-### Tweeter - Mobile View
-
-!["Mobile View"]()
+!["Edit existing appointment"](https://github.com/jordangm94/scheduler-/blob/master/docs/scheduler-edit-existiing-app.png?raw=true)
 
 ## Setup
 
