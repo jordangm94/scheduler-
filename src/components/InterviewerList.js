@@ -1,12 +1,10 @@
 import React from "react";
-
 import InterviewerListItem from "./InterviewerListItem";
-
 import "components/InterviewerList.scss"
-
 import PropTypes from 'prop-types';
 
 //This component is receiving the interviewers Array as a prop, this is an array of Interviewer objects. 
+
 export default function InterviewerList(props) {
 
   //Next we will loop through the array using the .map function and gain access to each individual obj in array. 
@@ -39,6 +37,7 @@ export default function InterviewerList(props) {
   );
 }
 
+//Uses Prop Types dependency to ensures that prop passed to InterviewerList must be an array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 }

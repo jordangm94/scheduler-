@@ -25,7 +25,6 @@ const useVisualMode = function(initialMode) {
   }
 
   //Back function that allows for mode to be set back to previous mode in history array. Uses if conditional to ensure history.length to ensure that we are never backing past the fist value in array. 
-
   //Needs to use setHistory as well in order for place in history to be remembered, that way if we call back again it will bring us back a spot from our current position, not the initial position. 
   const back = function() {
     if (history.length <= 1) return 

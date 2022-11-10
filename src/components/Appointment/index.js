@@ -1,22 +1,15 @@
 import React from 'react'
-
 import "components/Appointment/styles.scss"
-
 import Header from "./Header";
-
 import Empty from "./Empty";
-
 import Show from "./Show";
-
 import Form from './Form';
-
 import Status from './Status';
-
 import useVisualMode from 'hooks/useVisualMode';
-
 import Confirm from './Confirm';
-
 import Error from './Error';
+
+//The bottom of this document contains extended notes related to this Appointment component
 
 export default function Appointment(props) {
 const EMPTY = "EMPTY";
@@ -90,7 +83,8 @@ function cancel() {
   )
 }
 
-//Important details about appointment component:
+//Extended Notes:
+
 /*Here we are are introducing our terms and bringing in our functions from useVisualMode
 We check if props.interview is truthy when passed to appointment. 
 

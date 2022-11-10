@@ -1,14 +1,11 @@
 import React from 'react'
-
 import "components/Application.scss";
-
 import DayList from "./DayList";
-
 import Appointment from "./Appointment";
-
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
-
 import useApplicationData from "hooks/useApplicationData";
+
+//The bottom of this document contains extended notes related to this Application component
 
 export default function Application(props) {
 
@@ -31,16 +28,6 @@ export default function Application(props) {
       interviewers={getInterviewersForDay(state, state.day)}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
-      //Note here we use the spread operator...For every loop/map over a new object it takes the keys of that object
-      //and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
-      //it needs!
-      
-      // id={appointmentObj.id}
-      // time={appointmentObj.time}
-      // interview={appointmentObj.interview}
-
-      //Further note: Here we used getInterviewersForDay function in order for it to properly acquire the correct interviewer data and
-      //pass it dwn to Appointment --> Form --> InterviewerList --> InterviewerListItem
       />
     )
   })
@@ -74,3 +61,16 @@ export default function Application(props) {
     </main>
   );
 }
+
+//Extended notes:
+
+//Note at line 29 we use the spread operator...For every loop/map over a new object it takes the keys of that object
+//and passes them as props same as the code below. More dynamic approach, allows appointment to be passed only the keys
+//it needs!
+      
+// id={appointmentObj.id}
+// time={appointmentObj.time}
+// interview={appointmentObj.interview}
+
+//Further note: Here we used getInterviewersForDay function in order for it to properly acquire the correct interviewer data and
+//pass it dwn to Appointment --> Form --> InterviewerList --> InterviewerListItem

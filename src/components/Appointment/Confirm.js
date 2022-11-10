@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "components/Button";
 
-//This delete confirm component depends on the button we implemented before as you can see in html,
+//This confirm component depends on the button we implemented before as you can see in html,
 //hence why we must import it here! 
 
 export default function Confirm(props) {

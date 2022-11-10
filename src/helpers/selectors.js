@@ -29,19 +29,15 @@ export function getInterview(state, interview) {
          student: interview.student,
          interviewer: interviewerObject
         }
-     
         return interviewerObj;
     }
     return null
 }
 
 export function getInterviewersForDay(state, day) {
-
   const filteredDaysForDayMatch = state.days.filter(dayObj => dayObj.name === day)
-
   if (state.days.length === 0 || filteredDaysForDayMatch[0] === undefined) {
     return [];
   }
-
   return filteredDaysForDayMatch[0].interviewers.map(ID => state.interviewers[ID] )
 }

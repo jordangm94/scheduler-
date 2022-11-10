@@ -1,3 +1,5 @@
+//This file contains mock data to simulate axios requests in our unit and integration tests
+
 export default {
   get: jest.fn(url => {
     if (url === "/api/days") {
@@ -42,7 +44,6 @@ export default {
     }
   })
 }
-
 
 const fixtures = {
   days: [

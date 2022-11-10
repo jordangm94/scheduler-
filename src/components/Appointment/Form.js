@@ -4,7 +4,7 @@ import InterviewerList from "components/InterviewerList";
 
 import Button from "components/Button";
 
-//The bottom of this document contains notes for various instances of this Form. 
+//The bottom of this document contains extended notes related to this Form component
 
 export default function Form(props) {
 
@@ -77,7 +77,7 @@ export default function Form(props) {
   );
 }
 
-//Personal Notes:
+//Extended Notes:
 
 //For our create state we are passing the array of interviewers through props.interviewers
 //and assigning it a prop name of interviewers. This way it can pass correct info from interviewers array
