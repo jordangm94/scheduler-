@@ -25,13 +25,14 @@ export default {
     }
   }),
   put: jest.fn(url => {
-    if (url === "/api/appointments/1") {
+    if (url.includes("/api/appointments/")) {
       return Promise.resolve({
         status: 204,
         statusText: "No content",
       });
     }
   }),
+
   delete: jest.fn(url => {
     if (url === "/api/appointments/2") {
       return Promise.resolve({
