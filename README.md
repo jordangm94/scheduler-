@@ -6,7 +6,7 @@ Using the latest tools and techniques, this single page React application allows
 
 ### Interview Scheduler - Main page
 
-!["Landing page for Interview Scheduler"](https://github.com/jordangm94/scheduler-/blob/master/docs/scheduler-full-page-view.png?raw=true)
+!["Landing page for Interview Scheduler"](https://github.com/jordangm94/scheduler-/blob/master/docs/scheduler-full-page%20view.png?raw=true)
 
 ### Interview Scheduler - Create a new appointment
 
