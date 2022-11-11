@@ -7,7 +7,7 @@ const state = {
       name: "Monday",
       appointments: [1, 2, 3],
       interviewers: [1, 2]
- 
+
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ const state = {
     }
   },
   interviewers: {
-    "1": {  
+    "1": {
       "id": 1,
       "name": "Sylvia Palmer",
       "avatar": "https://i.imgur.com/LpaY82x.png"

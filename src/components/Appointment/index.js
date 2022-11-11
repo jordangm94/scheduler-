@@ -1,5 +1,5 @@
-import React from 'react'
-import "components/Appointment/styles.scss"
+import React from 'react';
+import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
@@ -12,75 +12,76 @@ import Error from './Error';
 //The bottom of this document contains extended notes related to this Appointment component
 
 export default function Appointment(props) {
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
-const CREATE = "CREATE";
-const SAVING = "SAVING";
-const DELETING ="DELETING";
-const CONFIRM ="CONFIRM";
-const EDIT ="EDIT";
-const ERROR_SAVE = "ERROR_SAVE"
-const ERROR_DELETE = "ERROR_DELETE"
+  //These are our constants for setting mode
+  const EMPTY = "EMPTY";
+  const SHOW = "SHOW";
+  const CREATE = "CREATE";
+  const SAVING = "SAVING";
+  const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
-//Object destructuring will allow use to use "mode" rather than useVisualMode.mode
-const { mode, transition, back } = useVisualMode(
-  props.interview ? SHOW : EMPTY
-);
+  //Object destructuring will allow use to use "mode" rather than useVisualMode.mode
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
 
-function save(name, interviewer) {
-  const interview = {
-    student: name,
-    interviewer
-  };
-  transition(SAVING)
-  //The book interview function is passed to the appointment prop, because of it's axios call, it is considered a promise. 
-  //So we tack on a .then with the transition show, this means that the transition show does not happen till the bookInterview promise/putrequest/setState resloves. 
-  props.bookInterview(props.id, interview)
-  .then(() => {transition(SHOW)})
-  .catch(response => transition(ERROR_SAVE, true))
-}
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING);
+    //The book interview function is passed to the appointment prop, because of it's axios call, it is considered a promise. 
+    //So we tack on a .then with the transition show, this means that the transition show does not happen till the bookInterview promise/putrequest/setState resloves. 
+    props.bookInterview(props.id, interview)
+      .then(() => { transition(SHOW); })
+      .catch(response => transition(ERROR_SAVE, true));
+  }
 
-//This function is passed to the show component so that when an individual clicks the delete button, it is triggered. 
-function cancel() {
-  transition(DELETING, true)
-  props.cancelInterview(props.id)
-  .then(() => {transition(EMPTY)})
-  .catch(response => transition(ERROR_DELETE, true))
-}
+  //This function is passed to the show component so that when an individual clicks the delete button, it is triggered. 
+  function cancel() {
+    transition(DELETING, true);
+    props.cancelInterview(props.id)
+      .then(() => { transition(EMPTY); })
+      .catch(response => transition(ERROR_DELETE, true));
+  }
 
-//Note for our show component, we allow for our onDelete, trash button, to transition us to Confirm component. 
-//From there we decide on line 66 whether we execute cancel and delete of appointment or go back to show.
+  //Note for our show component, we allow for our onDelete, trash button, to transition us to Confirm component. 
+  //From there we decide on line 66 whether we execute cancel and delete of appointment or go back to show.
   return (
     <article data-testid="appointment" className="appointment">
-      <Header time={props.time}/>
+      <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
-      <Show
-       student={props.interview.student}
-       interviewer={props.interview.interviewer}
-       onDelete={() => {transition(CONFIRM)}}
-       onEdit={() => {transition(EDIT)}}
-      />
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onDelete={() => { transition(CONFIRM); }}
+          onEdit={() => { transition(EDIT); }}
+        />
       )}
-      {mode === CREATE && <Form 
-        onSave={save} 
-        onCancel={() => back()} 
+      {mode === CREATE && <Form
+        onSave={save}
+        onCancel={() => back()}
         interviewers={props.interviewers}
       />}
-      {mode === SAVING && <Status message= "Saving"/>}
-      {mode === DELETING && <Status message= "Deleting"/>}
-      {mode === CONFIRM && <Confirm message="Are you sure you want to delete your appointment?" onCancel={() => back()} onConfirm={cancel}/>}
-      {mode === EDIT && <Form 
-        onSave={save} 
-        onCancel={() => back()} 
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
+      {mode === CONFIRM && <Confirm message="Are you sure you want to delete your appointment?" onCancel={() => back()} onConfirm={cancel} />}
+      {mode === EDIT && <Form
+        onSave={save}
+        onCancel={() => back()}
         interviewers={props.interviewers}
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
       />}
-      {mode === ERROR_SAVE && <Error onClose={() => {back()}} message= "Unable to create an appointment, please try again."/>}
-      {mode === ERROR_DELETE && <Error onClose={() => {back()}} message= "Unable to delete the appointment, please try again."/>}
+      {mode === ERROR_SAVE && <Error onClose={() => { back(); }} message="Unable to create an appointment, please try again." />}
+      {mode === ERROR_DELETE && <Error onClose={() => { back(); }} message="Unable to delete the appointment, please try again." />}
     </article>
-  )
+  );
 }
 
 //Extended Notes:

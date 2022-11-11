@@ -9,20 +9,20 @@ export default function DayList(props) {
   const listOfDays = props.days.map((daysObj) => {
     return (
       <DayListItem
-      key = {daysObj.id}
-      name = {daysObj.name}
-      spots = {daysObj.spots}
-      selected = {daysObj.name === props.value}
-      setDay = {props.onChange}
+        key={daysObj.id}
+        name={daysObj.name}
+        spots={daysObj.spots}
+        selected={daysObj.name === props.value}
+        setDay={props.onChange}
       />
-    )
-  })
-  
+    );
+  });
+
   return (
     <ul>
       {listOfDays}
     </ul>
-  )
+  );
 }
 
 //Extended Notes

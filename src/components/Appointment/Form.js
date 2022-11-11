@@ -17,12 +17,12 @@ export default function Form(props) {
   const reset = function() {
     setStudent("");
     setInterviewer(null);
-  }
+  };
 
-  const cancel = function () {
-    reset()
-    props.onCancel()
-  }
+  const cancel = function() {
+    reset();
+    props.onCancel();
+  };
 
   //Validate function in case student name entered as empty or interviewer not selected
   //Save is now happening from within this function, which is why we now only pass this function from save button.
@@ -33,7 +33,7 @@ export default function Form(props) {
     }
 
     if (interviewer === null) {
-      setError("Please select an interviewer")
+      setError("Please select an interviewer");
       return;
     }
     //Clear error just in case user forgot to put student name or select interviewer and is going through form a second time.
@@ -55,7 +55,7 @@ export default function Form(props) {
             onChange={(event) => setStudent(event.target.value)}
             data-testid="student-name-input"
           />
-        <section className="appointment__validation">{error}</section>
+          <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList
           interviewers={props.interviewers}

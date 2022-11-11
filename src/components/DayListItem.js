@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import "components/DayListItem.scss"
+import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
 
@@ -13,14 +13,14 @@ export default function DayListItem(props) {
     } else {
       return props.spots + " spots";
     }
-  }
+  };
   //Conditional statements using classNames functions, base className is day-list__item, if props.selected or props.spots conditions 
   //are truthy, than other css is implemented. 
-  let dayClass = classNames('day-list__item', {'day-list__item--selected': props.selected, 'day-list__item--full': props.spots === 0 ? true: false})
+  let dayClass = classNames('day-list__item', { 'day-list__item--selected': props.selected, 'day-list__item--full': props.spots === 0 ? true : false });
 
   return (
     <li data-testid="day" className={dayClass} onClick={() => props.setDay(props.name)}>
-      <h2 className="text--regular">{props.name}</h2> 
+      <h2 className="text--regular">{props.name}</h2>
       <h3 className="text--light">{formatSpots(props.spots)} remaining</h3>
     </li>
   );
